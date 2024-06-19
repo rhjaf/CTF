@@ -1,4 +1,4 @@
-nmap -sC -sV -p- 10.0.2.5 -oA init-scan1
+```nmap -sC -sV -p- 10.0.2.5 -oA init-scan1```
 sudo nmap -Pn -p- -A -T4 -oN scan.txt <target_ip> : slow but reliable
 sudo nmap -Pn -p- -A --min-rate 5000 -oN scan.txt <target_ip> : faster but target may drop so adjust min-rate
 sudo nmap -Pn -sU --top-ports 500 -A -T4 -oN udp-scan.txt <target_ip> : UDP scan
