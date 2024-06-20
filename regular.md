@@ -1,4 +1,17 @@
-Scanning
+ **Table of content:**
+ - [Scanning](#scan)
+ - [Listening](#listen)
+ - [Sharing](#share)
+ - [Webapp](#web)
+ - [Cracking](#crack)
+ - [payload generation](#payload)
+ - [DNS](#dns)
+ - [Searching](#search)
+ - [Object Analysis](#file)
+ - [Other](#misc)
+
+<a id="scan"></a>
+## Scanning
 ```bash
 nmap -sC -sV -p- 10.0.2.5 -oA init-scan1
 ```
@@ -16,13 +29,27 @@ sudo nmap -Pn -sU --top-ports 500 -A -T4 -oN udp-scan.txt <target_ip>
 ```
 
 
-Listening
+<a id="listen"></a>
+## Listening
 connect to port
 ```bash
 nc -nv <target-ip> <target-port>
 ``` 
 
-Web application enumerating
+<a id="share"></a>
+## Sharing
+```bash
+ftp anonymous@10.10.100.44
+```
+list shares. `-N` means passwordless
+```bash
+smbclient -N -L //10.10.100.44
+```
+
+
+
+<a id="web"></a>
+## Web application enumeration
 Directory bruteforce
 ```bash 
 gobuster dir -e -u http://10.0.2.5 -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt -x html,php -o gobuster-scan
@@ -38,12 +65,21 @@ Automatic Vulnerability scanner
 ```bash 
 nkito -host https://
 ```
+Sending requests
+```bash
+curl -I HEAD http://mysite.com
+curl -X POST http://mysite.com -H "Authorization: Bearer token" -D "{ 'data': 'something' }"
+```
 
+<a id="crack"></a>
+## Crack and Bruteforce
 Crack Zip
 ```bash
 fcrackzip -D -p /user/share/wordlists/rockyou.txt user_backup.zip
 ```
 
+<a id="payload"></a>
+## Payloads
 Payload with msfvenom
 ```bash 
 msfvenom --list payloads
@@ -55,7 +91,8 @@ msfvenom -p payloadname --list-options
 msfvenom -p payloadname LHOST="" LPORT="" -f python -b "\x00\x0a\0d"
 ```
 
-DNS 
+<a id="dns"></a>
+## DNS 
 Get all dns servers for a domain
 ```bash
 dig +short ns zonetransfer.me
@@ -64,35 +101,51 @@ Get copy of zone from dns server
 ```bash
 dig axfr zonetransfer.me @nsztm1.digi.ninja.
 ```
+DNS zone transfer. "mysite.test" is the certificate name that target is using
+```bash
+host -l mysite.test 10.10.100.44
+```
 
+
+<a id="search"></a>
+## Searching
+```bash
 find . -user userX -group groupY | cat 		===> show path
 find . -user userX -group groupY | xargs cat	===> show content
-
-cat my-ctf-password.txt | xclip ===> copy to clipboard
-
-host -l mysite.test 10.10.100.44 : DNS zone transfer. "mysite.test" is the certificate name that target is using
-
-ftp anonymous@10.10.100.44
-smbclient -N -L //10.10.100.44 : list shares. -N means passwordless
+```
 
 
+
+
+
+
+<a id="file"></a>
+## File and object analysis
 binwalk: embedded inside exe and other file types
+```bash
 binwalk -D "png image:png" fidf.jpg
-
+```
 exiftool: meta information
 
-objdump -D file.bin : copy importan infos from a file like its assembler or execution code in assembly
-
+objdump: copy important Info from a file like its assembler or execution code in assembly
+```bash
+objdump -D file.bin
+```
+```bash
 strings -a
+```
+hexdump of a file
+```bash
+xxd
+```
+stat of a file
+```bash
+stat 
+```
 
-xxd : hexdump of a file
-stat : stat of a file
-
-curl -I HEAD http://mysite.com
-curl -X POST http://mysite.com -H "Authorization: Bearer token" -D "{ 'data': 'something' }"
-
-
-
-
-
-
+<a id="misc"></a>
+## Misc
+Copy to clipboard
+```bash
+cat my-ctf-password.txt | xclip
+```
