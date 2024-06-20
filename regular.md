@@ -9,6 +9,7 @@
  - [Searching](#search)
  - [Object Analysis](#file)
  - [Other](#misc)
+
 **Advanced:**
  - [Android](#android)
  - [Web](#web)
