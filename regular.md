@@ -208,12 +208,12 @@ cat my-ctf-password.txt | xclip
   `Objection` is a tool for bypassing **SSL pinning** that is based on Frida.
 
   Running frida:
-	  ```bash
+  ```bash
   frida -U -l .\Desktop\frida.js -f jakhar.aseem.diva
    ```
    ```
    %resume
-  ```
+   ```
 
 - `APKTools`(APK easytool APKtool GUI) and `JadxGUI` for **static** analysis (decompilation any app written in any language to **JAVA**).
 
@@ -238,8 +238,8 @@ cat my-ctf-password.txt | xclip
  - Create and Start directly an `intent` Action: `#am start -a jakhar.aseem.diva.action.VIEW_CREDS`
  - Intent with extra:
  	```bash
-  am start -n jakhar.aseem.diva/.APICreds2Activity -a jakhar.aseem.diva.action.VIEW_CREDS2 --ez check_pin false
-  ```
+  	am start -n jakhar.aseem.diva/.APICreds2Activity -a jakhar.aseem.diva.action.VIEW_CREDS2 --ez check_pin false
+  	```
 
 
 
